@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package event;
+option go_package="eventpb";
+
+message CreateEvent {
+    string topic = 1;
+    string name = 2;
+    string user = 3;
+    string timestamp = 4;
+}
+
+message EditEvent {
+    string topic = 1;
+    string name = 2;
+    string user = 3;
+    string operation = 4;
+    string delta = 5;
+    string timestamp = 6;
+}
+
+message CreateEventRequest {
+    CreateEvent createEvent = 1;
+}
+
+message CreateEventResponse {
+    string result = 1;
+}
+
+message EditEventRequest {
+    EditEvent editEvent = 1;
+}
+
+message EditEventResponse {
+    string result = 1;
+}
+
+service EventService {
+    // Create Feature Unary API
+    rpc Create(CreateEventRequest) returns (CreateEventResponse) {}
+
+    // Client Streaming
+    rpc Edit(stream EditEventRequest) returns (EditEventResponse) {}
+}
+
